@@ -19,10 +19,13 @@ module.exports = {
 
         await sharp(req.file.path)
             .resize(500)
+            .withMetadata()
             .jpeg({quality: 70})
             .toFile(
                 path.resolve(req.file.destination, 'resized', fileName)
-            )
+            );
+        
+        fs.unlinkSync(req.file.path);
 
         const post = await Post.create({
             author,
@@ -32,9 +35,9 @@ module.exports = {
             image: fileName,
         });
 
-        req.io.emit('post',post);
+        req.io.emit('post', post);
 
         return res.json(post);
         
-    }
+    },
 };

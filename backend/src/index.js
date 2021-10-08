@@ -5,13 +5,14 @@ const cors = require("cors");
 
 const app = express();
 
-const server = require("https").Server(app);
+const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
 mongoose.connect(
   "mongodb+srv://adminPedro:C2NCGIKTuRu9WgSw@cluster0.f4wio.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
   }
 );
 
